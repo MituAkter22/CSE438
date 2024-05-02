@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+void main() => runApp(MyApp());
+
+
+class MyApp extends StatelessWidget {
+    final List<Article> articles = [
+        Article(
+            title: 'Flutter is awesome!',
+            url: 'https://flutter.dev',
+            image: 'https://via.placeholder.com/150',
+        ),
+        Article(
+            title: 'Dart is powerful!',
+            url: 'https://dart.dev',
+            image: 'https://via.placeholder.com/150',
+        ),
+        Article(
+            title: 'Google is cool!',
+            url: 'https://www.google.com',
+            image: 'https://via.placeholder.com/150',
+        ),
+    ];
+
+    @override
+    Widget build(BuildContext context) {
+        return MaterialApp(
+            title: 'News Articles',
+            home: Scaffold(
+                appBar: AppBar(
+                    title: Text('News Articles'),
+                ),
+                body: ListView.builder(
+                    itemCount: articles.length,
+                    itemBuilder: (BuildContext context, int index) {
+                        final article = articles[index];
+                        return ListTile(
+                            leading: Image.network(
+                                article.image,
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                            ),
+                            title: Text(article.title),
+                            subtitle: Text(article.description),
+                            onTap: () async {
+                                if (await canLaunch(article.url)) {
+                                    await launch(article.url);
+                                } else {
+                                    throw 'Could not launch ${article.url}';
+                                }
+                            },
+                        );
+                    },
+                ),
+            ),
+        );
+    }
+}
+
+class Article {
+    final String title;
+    final String url;
+    final String image;
+    final String description;
+
+    Article({
+        required this.title,
+        required this.url,
+        required this.image,
+        this.description = '',
+    });
+}

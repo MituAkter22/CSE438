@@ -1,0 +1,185 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+class PersonFragment extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+
+    return  MaterialApp(
+        theme: ThemeData(primarySwatch: Colors.blue) ,
+        // darkTheme: ThemeData(primarySwatch:Colors.amber),
+        color: Colors.grey,
+        debugShowCheckedModeBanner: false,
+        home:const HomeActivity()
+    );
+
+  }
+}
+
+
+class HomeActivity extends StatelessWidget{
+  const HomeActivity({super.key});
+
+
+  MySnackBar(message,context){
+    return ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message))
+    );
+  }
+  MyAlertDialog(context){
+    return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return Expanded(
+              child: AlertDialog(
+                title: const Text("Alert !"),
+                content: const Text("Do you want to delete"),
+                actions: [
+                  TextButton(onPressed: (){
+                    MySnackBar("Delete Success",context);
+                    Navigator.of(context).pop();
+                  }, child: const Text("Yes")),
+                  TextButton(onPressed: (){Navigator.of(context).pop();}, child: const Text("No")),
+                ],
+              )
+          );
+        }
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    ButtonStyle buttonStyle=ElevatedButton.styleFrom(
+        padding: const EdgeInsets.all(25),
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(40))
+        )
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Inventory App"),
+        titleSpacing: 10,
+        toolbarHeight: 60,
+        toolbarOpacity: 1,
+        elevation: 0,
+        backgroundColor: Colors.blueAccent,
+        actions: [
+          IconButton(onPressed: (){MySnackBar("I am comments",context);}, icon: const Icon(Icons.comment)),
+          IconButton(onPressed: (){MySnackBar("I am search",context);}, icon: const Icon(Icons.search)),
+          IconButton(onPressed: (){MySnackBar("I am settings",context);}, icon: const Icon(Icons.settings)),
+          IconButton(onPressed: (){MySnackBar("I am email",context);}, icon: const Icon(Icons.email))
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        backgroundColor: Colors.green,
+        onPressed: (){
+          MySnackBar("I am floating action button",context);
+        },
+        child: const Icon(Icons.add) ,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.message),label: "Contact"),
+          BottomNavigationBarItem(icon: Icon(Icons.person),label: "Profile")
+        ],
+        onTap: (int index){
+          if(index==0){
+            MySnackBar("I am home bottom menu",context);
+          }
+          if(index==1){
+            MySnackBar("I am contact bottom menu",context);
+          }
+          if(index==2){
+            MySnackBar("I am profile bottom menu",context);
+          }
+        },
+
+
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+                padding: const EdgeInsets.all(0),
+                child: UserAccountsDrawerHeader(
+                  decoration: const BoxDecoration(color: Colors.white),
+                  accountName: const Text("Shakib M. Dipto",style: TextStyle(color: Colors.black)),
+                  accountEmail: const Text("shakib.mahmud@ulab.edu.bd",style: TextStyle(color: Colors.black)),
+                  // currentAccountPicture: Image.network("https://scontent.fdac135-1.fna.fbcdn.net/v/t39.30808-6/330286459_198392772798626_9040609534026597085_n.jpg?stp=cp6_dst-jpg&_nc_cat=102&ccb=1-7&_nc_sid=174925&_nc_eui2=AeHFAbz7Jgj7dXWxJ46AcwdTLFwV53PW-LksXBXnc9b4ucL2T0G69WeAk3gTdMiNXyRzeG2NaSPtB9O9ak7pyjgE&_nc_ohc=i1PPvj5bOUwAX9tVJ7V&_nc_ht=scontent.fdac135-1.fna&oh=00_AfDYq6OeoILj3nkOLJBVLRCIgA24tz4G6c_SWNi0bqt0tA&oe=642A397D"),
+                  currentAccountPicture: Container(
+                    margin: const EdgeInsets.only(bottom: 10.0),
+                    width: 500.0,
+                    height: 500.0,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        alignment:Alignment.center,
+                        image: NetworkImage(
+                          "https://avatars.githubusercontent.com/u/73157393?s=400&u=37c05554a6ab8a86e947691f7486ddbd18f70ce2&v=4",
+                        ),
+                      ),
+                    ),
+                  ),
+                  onDetailsPressed: (){MySnackBar("This is profile",context);},
+                )
+            ),
+
+            const ListTile(title: Text("Home")),
+            const ListTile(title: Text("Email")),
+            const ListTile(title: Text("Phone")),
+
+
+            ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text("Home"),
+                subtitle: const Text("This is a home button",style: TextStyle(fontSize: 10)),
+                // enabled: false,
+                onTap: (){
+                  MySnackBar("I am home",context);
+                }),
+            ListTile(
+                leading: const Icon(Icons.email),
+                title: const Text("Email"),
+                onTap: (){
+                  MySnackBar("I am email",context);
+                }),
+            ListTile(
+                leading: const Icon(Icons.phone),
+                title: const Text("Phone"),
+                onTap: (){
+                  MySnackBar("I am phone",context);
+                }),
+
+          ],
+        ),
+
+      ),
+      // body: Column(
+      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //   children: [
+      //     Container(height: 100,width: 100,child: Image.network("https://avatars.githubusercontent.com/u/73157393?s=400&u=37c05554a6ab8a86e947691f7486ddbd18f70ce2&v=4")),
+      //     Container(height: 100,width: 100,child: Image.network("https://avatars.githubusercontent.com/u/73157393?s=400&u=37c05554a6ab8a86e947691f7486ddbd18f70ce2&v=4")),
+      //     Container(height: 100,width: 100,child: Image.network("https://avatars.githubusercontent.com/u/73157393?s=400&u=37c05554a6ab8a86e947691f7486ddbd18f70ce2&v=4")),
+      //   ],
+      // ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(onPressed: (){MySnackBar("I am Text Button",context);}, child: const Text('Text Button')),
+          ElevatedButton(onPressed: (){MyAlertDialog(context);}, child: const Text('Elevated Button'),style: buttonStyle),
+          OutlinedButton(onPressed: (){MySnackBar("I am Outline Button",context);}, child: const Text('Outline Button')),
+        ],
+      ),
+    );
+
+  }
+
+
+
+}

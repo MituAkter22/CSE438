@@ -1,0 +1,59 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+class ContactFragment extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return  MaterialApp(
+        home: HomeActivity(),
+        debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class HomeActivity extends StatelessWidget{
+
+  var MyItems=[
+
+    {"img":"https://th.bing.com/th/id/R.2f82d9d23b76c00f139538baeee08f53?rik=6YiKYE%2bjw69h%2bw&riu=http%3a%2f%2fwallpapercave.com%2fwp%2f27iFUEE.jpg&ehk=%2fGmcB8HSs3mHb5wgTpwtvj02DveKEgNaMkq1XQUBIpM%3d&risl=&pid=ImgRaw&r=0","title":"item5"},
+    {"img":"https://th.bing.com/th/id/R.2f82d9d23b76c00f139538baeee08f53?rik=6YiKYE%2bjw69h%2bw&riu=http%3a%2f%2fwallpapercave.com%2fwp%2f27iFUEE.jpg&ehk=%2fGmcB8HSs3mHb5wgTpwtvj02DveKEgNaMkq1XQUBIpM%3d&risl=&pid=ImgRaw&r=0","title":"item5"},
+    {"img":"https://th.bing.com/th/id/R.2f82d9d23b76c00f139538baeee08f53?rik=6YiKYE%2bjw69h%2bw&riu=http%3a%2f%2fwallpapercave.com%2fwp%2f27iFUEE.jpg&ehk=%2fGmcB8HSs3mHb5wgTpwtvj02DveKEgNaMkq1XQUBIpM%3d&risl=&pid=ImgRaw&r=0","title":"item5"},
+    {"img":"https://th.bing.com/th/id/R.2f82d9d23b76c00f139538baeee08f53?rik=6YiKYE%2bjw69h%2bw&riu=http%3a%2f%2fwallpapercave.com%2fwp%2f27iFUEE.jpg&ehk=%2fGmcB8HSs3mHb5wgTpwtvj02DveKEgNaMkq1XQUBIpM%3d&risl=&pid=ImgRaw&r=0","title":"item5"},
+
+    {"img":"https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80","title":"item8"},
+    {"img":"https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80","title":"item9"}
+  ];
+
+  mySnackBar(context,msg){
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("My App"),
+        ),
+        body: ListView.builder(
+          // body: GridView.builder(
+          //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //       crossAxisCount: 2,
+          //       crossAxisSpacing: 0,
+          //       childAspectRatio: 1.2
+          //   ) ,
+          itemCount: MyItems.length,
+          itemBuilder: (context,index){
+            return GestureDetector(
+              onTap: (){mySnackBar(context,MyItems[index]['title']);},
+              child: Container(
+                  margin: EdgeInsets.all(10),
+                  width: double.infinity,
+                  height: 500,
+                  child: Image.network(MyItems[index]['img']!, fit: BoxFit.contain)
+              ),
+            );
+          },
+        )
+    );
+  }
+}
